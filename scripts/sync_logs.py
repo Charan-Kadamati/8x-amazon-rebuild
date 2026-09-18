@@ -9,10 +9,15 @@ BRAIN_DIR = os.path.join(APP_DATA_DIR, "brain")
 WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AGENT_LOGS_DIR = os.path.join(WORKSPACE_DIR, ".agent-logs")
 
+TOOL_TYPES = {
+    "LIST_DIRECTORY", "VIEW_FILE", "RUN_COMMAND", "WRITE_TO_FILE",
+    "REPLACE_FILE_CONTENT", "MULTI_REPLACE_FILE_CONTENT", "GREP_SEARCH",
+    "CODE_ACTION", "MANAGE_TASK", "SCHEDULE", "ASK_QUESTION"
+}
+
 def clean_user_prompt(content):
     if not content:
         return ""
-    # Extract inner prompt from <USER_REQUEST> if wrapped by system
     match = re.search(r'<USER_REQUEST>\s*(.*?)\s*</USER_REQUEST>', content, re.DOTALL)
     if match:
         return match.group(1).strip()
@@ -22,7 +27,6 @@ def process_transcript(transcript_path):
     if not os.path.exists(transcript_path):
         return
 
-    # Extract conversation ID from path
     parts = transcript_path.replace("\\", "/").split("/")
     try:
         conv_idx = parts.index("brain") + 1
@@ -73,16 +77,15 @@ def process_transcript(transcript_path):
                 }
                 turns.append(current_turn)
 
-        # Detect Model Response
+        # Detect Model Text Response (must ignore intermediate tool outputs)
         elif source == "MODEL" and current_turn is not None:
-            # We look for text response content from PLANNER_RESPONSE or final MODEL content
             content = item.get("content", "")
-            # Skip system tool execution result messages (e.g. LIST_DIRECTORY outputs)
             if item_type in ["PLANNER_RESPONSE", "MODEL_RESPONSE", "ASSISTANT_RESPONSE"] and content:
-                current_turn["response"] = content.strip()
-                current_turn["response_timestamp"] = created_at
-            elif content and item_type not in ["LIST_DIRECTORY", "VIEW_FILE", "RUN_COMMAND", "WRITE_TO_FILE", "REPLACE_FILE_CONTENT"]:
-                # If there's content and it's not a tool output type
+                # Exclude strings starting with Created At: tool outputs if any
+                if not content.startswith("Created At:"):
+                    current_turn["response"] = content.strip()
+                    current_turn["response_timestamp"] = created_at
+            elif content and item_type not in TOOL_TYPES and not content.startswith("Created At:"):
                 current_turn["response"] = content.strip()
                 current_turn["response_timestamp"] = created_at
 
