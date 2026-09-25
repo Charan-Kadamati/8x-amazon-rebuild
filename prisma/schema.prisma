@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id              String      @id @default(uuid())
+  title           String
+  brand           String
+  category        Category    @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  price           Float
+  listPrice       Float
+  discountPercent Int         @default(0)
+  rating          Float       @default(4.5)
+  reviewCount     Int         @default(0)
+  inStock         Boolean     @default(true)
+  stockCount      Int         @default(10)
+  isBestSeller    Boolean     @default(false)
+  isApexChoice    Boolean     @default(false)
+  primeEligible   Boolean     @default(true)
+  images          String      // JSON stringified array of image URLs
+  description     String
+  features        String      // JSON stringified array of feature bullets
+  specs           String      // JSON stringified key-value object
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  orderItems      OrderItem[]
+}
+
+model Order {
+  id            String      @id @default(uuid())
+  customerName  String
+  customerEmail String?
+  address       String
+  city          String
+  state         String
+  zipCode       String
+  paymentMethod String      @default("card")
+  subtotal      Float
+  shipping      Float
+  tax           Float
+  total         Float
+  status        String      @default("CONFIRMED")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  price     Float    // Snapshotted price at purchase time
+}

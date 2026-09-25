@@ -2,102 +2,104 @@
 
 import React from "react";
 import Link from "next/link";
-import { Zap, Globe } from "lucide-react";
+import { Sparkles, ShieldCheck, Truck, RotateCcw } from "lucide-react";
 
 export const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <footer className="bg-amazon-dark text-white text-xs mt-auto">
-      {/* Back to top button */}
-      <button
-        onClick={scrollToTop}
-        className="w-full bg-amazon-light_dark hover:bg-gray-700 py-3 text-center text-xs font-semibold text-gray-200 transition cursor-pointer"
-      >
-        Back to top
-      </button>
-
-      {/* Footer Navigation Columns */}
-      <div className="max-w-[1300px] mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700">
-        <div>
-          <h3 className="font-bold text-sm text-white mb-3">Get to Know Us</h3>
-          <ul className="space-y-2 text-gray-300">
-            <li className="hover:underline cursor-pointer">Careers</li>
-            <li className="hover:underline cursor-pointer">Blog</li>
-            <li className="hover:underline cursor-pointer">About ApexMart</li>
-            <li className="hover:underline cursor-pointer">Investor Relations</li>
-            <li className="hover:underline cursor-pointer">Apex Devices</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-bold text-sm text-white mb-3">Make Money with Us</h3>
-          <ul className="space-y-2 text-gray-300">
-            <li className="hover:underline cursor-pointer">Sell products on ApexMart</li>
-            <li className="hover:underline cursor-pointer">Sell on ApexMart Business</li>
-            <li className="hover:underline cursor-pointer">Become an Affiliate</li>
-            <li className="hover:underline cursor-pointer">Advertise Your Products</li>
-            <li className="hover:underline cursor-pointer">Self-Publish with Us</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-bold text-sm text-white mb-3">Apex Payment Products</h3>
-          <ul className="space-y-2 text-gray-300">
-            <li className="hover:underline cursor-pointer">Apex Business Card</li>
-            <li className="hover:underline cursor-pointer">Shop with Points</li>
-            <li className="hover:underline cursor-pointer">Reload Your Balance</li>
-            <li className="hover:underline cursor-pointer">Apex Currency Converter</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-bold text-sm text-white mb-3">Let Us Help You</h3>
-          <ul className="space-y-2 text-gray-300">
-            <li className="hover:underline cursor-pointer">Apex & COVID-19</li>
-            <li className="hover:underline cursor-pointer">Your Account</li>
-            <li className="hover:underline cursor-pointer">Your Orders</li>
-            <li className="hover:underline cursor-pointer">Shipping Rates & Policies</li>
-            <li className="hover:underline cursor-pointer">Returns & Replacements</li>
-            <li className="hover:underline cursor-pointer">Help Center</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Footer Branding & Country Selector */}
-      <div className="py-8 flex flex-col md:flex-row items-center justify-center gap-4 text-gray-300 border-b border-gray-800">
-        <Link href="/" className="flex items-center gap-1">
-          <Zap className="w-5 h-5 text-amazon-yellow fill-amazon-yellow" />
-          <span className="text-lg font-bold text-white tracking-tight">
-            apex<span className="text-amazon-yellow">mart</span>
-          </span>
-        </Link>
-
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-600 rounded text-xs">
-            <Globe className="w-4 h-4 text-gray-300" />
-            <span>English</span>
+    <footer className="bg-slate-950 text-slate-400 border-t border-slate-800 text-xs mt-auto">
+      <div className="max-w-7xl mx-auto px-6 py-12 space-y-10">
+        {/* Top Branding & Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Brand Intro */}
+          <div className="space-y-3 md:col-span-1">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <span className="text-xl font-extrabold tracking-tight text-white">
+                Apex<span className="text-indigo-400">Mart</span>
+              </span>
+            </Link>
+            <p className="text-slate-400 leading-relaxed text-[11px]">
+              Next-generation commerce startup interface built with React, Next.js App Router, and Prisma SQLite.
+            </p>
           </div>
-          <div className="px-3 py-1.5 border border-gray-600 rounded text-xs font-semibold">
-            $ USD - U.S. Dollar
-          </div>
-          <div className="px-3 py-1.5 border border-gray-600 rounded text-xs">
-            🇺🇸 United States
-          </div>
-        </div>
-      </div>
 
-      {/* Copyright Sub-footer */}
-      <div className="bg-[#0D141E] py-6 text-center text-[11px] text-gray-400 space-y-2">
-        <div className="flex flex-wrap justify-center gap-4">
-          <span className="hover:underline cursor-pointer">Conditions of Use</span>
-          <span className="hover:underline cursor-pointer">Privacy Notice</span>
-          <span className="hover:underline cursor-pointer">Consumer Health Data Privacy Disclosure</span>
-          <span className="hover:underline cursor-pointer">Your Ads Privacy Choices</span>
+          {/* Quick Departments */}
+          <div className="space-y-2">
+            <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Departments</h4>
+            <ul className="space-y-1.5 font-medium">
+              <li>
+                <Link href="/search?category=Electronics" className="hover:text-indigo-400 transition">
+                  Electronics
+                </Link>
+              </li>
+              <li>
+                <Link href="/search?category=Smart+Home" className="hover:text-indigo-400 transition">
+                  Smart Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/search?category=Audio+%26+Wearables" className="hover:text-indigo-400 transition">
+                  Audio & Wearables
+                </Link>
+              </li>
+              <li>
+                <Link href="/search?category=Fitness+%26+Sports" className="hover:text-indigo-400 transition">
+                  Fitness & Sports
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Customer Care */}
+          <div className="space-y-2">
+            <h4 className="font-bold text-white uppercase tracking-wider text-[11px]">Customer Care</h4>
+            <ul className="space-y-1.5 font-medium">
+              <li>
+                <Link href="/cart" className="hover:text-indigo-400 transition">
+                  View Shopping Cart
+                </Link>
+              </li>
+              <li>
+                <Link href="/checkout" className="hover:text-indigo-400 transition">
+                  Order Status & Tracking
+                </Link>
+              </li>
+              <li>
+                <Link href="/search" className="hover:text-indigo-400 transition">
+                  30-Day Return Guarantee
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Guarantees Badges */}
+          <div className="space-y-3 bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+            <div className="flex items-center gap-2 text-slate-200">
+              <Truck className="w-4 h-4 text-indigo-400 shrink-0" />
+              <span>Free Express Delivery over $35</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-200">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>Authentic Warranty Direct</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-200">
+              <RotateCcw className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>Instant Refund & Return Policy</span>
+            </div>
+          </div>
         </div>
-        <p>© 2026 ApexMart.com, Inc. or its affiliates. Rebuilt for 8x Assignment Demonstration.</p>
+
+        {/* Bottom Copyright */}
+        <div className="border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
+          <div>&copy; {new Date().getFullYear()} ApexMart, Inc. Designed independently for the 8x assignment.</div>
+          <div className="flex gap-4">
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+            <span>Security</span>
+          </div>
+        </div>
       </div>
     </footer>
   );
